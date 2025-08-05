@@ -1,0 +1,95 @@
+modules = ["python-3.11"]
+
+[nix]
+channel = "stable-25_05"
+packages = ["espeak-ng", "portaudio"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Voice Assistant"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "voice_assistant_test"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Demo Voice Assistant"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Auto Demo"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Web Voice Assistant"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Streamlit Voice Assistant"
+
+[[workflows.workflow]]
+name = "Voice Assistant"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python main.py"
+
+[[workflows.workflow]]
+name = "voice_assistant_test"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pip install speech_recognition pyttsx3 wikipedia pyaudio && python main.py"
+
+[[workflows.workflow]]
+name = "Demo Voice Assistant"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python demo_mode.py"
+
+[[workflows.workflow]]
+name = "Auto Demo"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python auto_demo.py"
+
+[[workflows.workflow]]
+name = "Web Voice Assistant"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python web_app.py"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Streamlit Voice Assistant"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "streamlit run streamlit_app.py --server.port=8501 --server.address=0.0.0.0"
+waitForPort = 8501
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 8501
+externalPort = 3000
